@@ -1,5 +1,3 @@
-import { print } from "../print/print.js";
-
 type Repeatable<Params extends [] = never, Return = never> =
   | ((...args: Params) => Return)
   | string;
@@ -9,10 +7,10 @@ type Args<T extends Repeatable> = T extends (...args: infer Params) => any
   ? Params
   : never;
 
-export const repeat = <Params extends [] = never>(
-  repeatable: (...args: Params) => any,
+export const repeat = (
+  repeatable: Repeatable,
   times: number,
-  ...args: Params
+  ...args: Args<typeof repeatable>
 ): string | void => {
   const timesArr = new Array(times);
 
@@ -25,10 +23,8 @@ export const repeat = <Params extends [] = never>(
   }
 };
 
-type test = Parameters<typeof repeat>;
-//   ^?
-
-repeat(add, 2, 1, 2);
+//! try to see if this results in an error.
+// repeat(add, 2, 1, 2);
 
 function add(a: number, b: number) {
   return a + b;

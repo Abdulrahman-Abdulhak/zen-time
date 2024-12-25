@@ -1,12 +1,11 @@
-import { print, repeat, wait } from "./core/index.js";
 import dotenv from "dotenv";
+import express from "express";
 
-dotenv.config({
-  path: "/",
+dotenv.config();
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`listening on port ${port}`);
 });
-
-print("Hello test 1");
-
-print(repeat(print, 2, "test"));
-
-print("then");
